@@ -9,7 +9,7 @@ function Post() {
   const [viewImage, setViewImage] = useState<string | null>(null);
   const [image, setImage] = useState<File | null>(null);
   const navigate = useNavigate();
-
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   const handlePost = async () => {
     if (!selectedPark || !comment || !image) {
@@ -23,7 +23,7 @@ function Post() {
     formData.append('image', image); 
 
     try {
-      const response = await fetch('http://localhost:3000/v1/post/', {
+      const response = await fetch(`${apiUrl}/v1/post/`, {
         method: 'POST',
         body: formData,
       });

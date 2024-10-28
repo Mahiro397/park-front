@@ -10,9 +10,8 @@ async function fetcher(key: string) {// keyはuseSWR()の第１引数で渡さ�
 }
 
 function Home() {
-
-  const { data, error, isLoading } = useSWR('http://localhost:3000/v1/post/', fetcher);
-  console.log(data);
+  const apiUrl = import.meta.env.VITE_API_URL;
+  const { data, error, isLoading } = useSWR(`${apiUrl}/v1/post/`, fetcher);
 
   if (error) return <div>エラーです</div>;
   if(isLoading) return <div>読み込み中...</div>;
