@@ -21,7 +21,7 @@ function Home() {
   {/* タイトル */}
     <div className="flex justify-center items-center p-4 text-2xl font-bold text-[#1da1f2]">
         {/* タイトルの内容が必要であればここに追加 */}
-        タイトル
+        公園情報共有アプリ
     </div>
 
   {/* タイムラインエリア */}
