@@ -8,6 +8,7 @@ function Post() {
   const [comment, setComment] = useState<string>('');
   const [viewImage, setViewImage] = useState<string | null>(null);
   const [image, setImage] = useState<File | null>(null);
+  const [isUploading, setIsUploading] = useState<boolean>(false);
   const navigate = useNavigate();
   const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -21,6 +22,8 @@ function Post() {
     formData.append('comment', comment);
     formData.append('parkId', selectedPark);
     formData.append('image', image); 
+
+    setIsUploading(true);
 
     try {
       const response = await fetch(`${apiUrl}/v1/post/`, {
@@ -37,6 +40,8 @@ function Post() {
     } catch (error) {
       console.error('Error:', error);
       alert('エラーが発生しました');
+    }finally {
+      setIsUploading(false); // アップロード完了
     }
   };
 
@@ -60,7 +65,13 @@ function Post() {
           ポスト
         </button>
       </div>
-
+      {isUploading && (
+      <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+        <div className="bg-gray-800 text-white p-5 rounded-lg text-center">
+          <p>アップロード中です...</p>
+        </div>
+      </div>
+    )}
       {/* 公園選択 */}
       <div className="mb-4">
         <label className="block text-gray-700 mb-2">公園を選択してください</label>
@@ -104,15 +115,8 @@ function Post() {
             {viewImage ? (
               <img src={viewImage} alt="選択した画像" className="w-full h-full object-cover rounded-lg m-2" />
             ) : (
-              <span className="text-gray-400">画像を選択</span>
+              <span className="text-gray-400">カメラを起動</span>
             )}
-          </label>
-          {/* カメラを起動するボタンを追加 */}
-          <label
-            htmlFor="imageUpload"
-            className="w-24 h-24 border rounded-lg flex items-center justify-center cursor-pointer hover:bg-gray-100 m-2"
-          >
-            <span className="text-gray-400">カメラを起動</span>
           </label>
         </div>
       </div>
